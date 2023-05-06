@@ -1,4 +1,9 @@
-from lang.lang import LangInit, Localisation
+from lang.lang import LangInit
 
-__version__ = "0.0.1"
+try:
+    from lang.lang import Localisation
+except:
+    pass
+
+__version__ = "0.0.3"
 __all__ = ["LangInit", "Localisation"]

@@ -1,3 +1,3 @@
 # Lang
 
-Description and exemple of this package comming soon
+Description and example of this package comming soon
