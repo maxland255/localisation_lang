@@ -3,8 +3,8 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "lang"
-version = "0.0.3"
+name = "local_lang"
+version = "0.0.4"
 authors = [
   { name="Maxlanf255", email="developer@pieteraerens.eu" },
 ]
