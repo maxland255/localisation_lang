@@ -68,6 +68,7 @@ class LangInit:
                     parameters = ""
                     replaceFunc = ""
                     condition = ""
+                    usedParam: list[str]= []
 
                     if param != None:
                         placeholders: dict[str, str] = param.get("placeholders")
@@ -75,12 +76,13 @@ class LangInit:
                         pkeys = placeholders.keys()
 
                         for pk in pkeys:
+                            usedParam.append(pk)
                             type = placeholders[pk].get("type")
                             if type != None:
-                                if type == "int" or type == "float" or type == "str":
+                                if type == "int" or type == "float" or type == "str" or type == "bool":
                                     parameters += f", {pk}: {type}"
                                     convertStr = ""
-                                    if type == "int" or type == "float":
+                                    if type == "int" or type == "float" or type == "bool":
                                         convertStr = ".__str__()"
                                     replaceFunc += f".replace(\"{startPrefix}{pk}{endPrefix}\", {pk}{convertStr})"
                                 elif type == "datetime" or type == "time":
@@ -92,11 +94,22 @@ class LangInit:
                                         print(f"`format` key is required for `datetime` or `time` type")
                                         exit(0)
                                 else:
-                                    print(f"{type} is not a supported type")
+                                    print(f"`{type}` is not a supported type")
                                     exit(0)
+                            else:
+                                parameters += f", {pk}: str | int | float | bool | datetime | time"
+                                condition += f"\n\t\tif type({pk}) == int or type({pk}) == float or type({pk}) == datetime or type({pk}) == time or type({pk}) == bool:\n\t\t\ttrad = trad.replace(\"{startPrefix}{pk}{endPrefix}\", {pk}.__str__())\n\t\telif type({pk}) == str:\n\t\t\ttrad = trad.replace(\"{startPrefix}{pk}{endPrefix}\", {pk})\n\t\telse:\n\t\t\tprint(f\"`{startPrefix}type({pk}){endPrefix}` is not a supported variable type\")\n\t\t\treturn None"
+
+                    allKey: list[str] = re.findall("({[a-zA-Z]*})", value)
+
+                    for a in allKey:
+                        a = a.replace("{", "").replace("}", "")
+                        if usedParam.__contains__(a) == False:
+                            parameters += f", {a}: str | int | float | bool | datetime | time"
+                            condition += f"\n\t\tif type({a}) == int or type({a}) == float or type({a}) == datetime or type({a}) == time or type({a}) == bool:\n\t\t\ttrad = trad.replace(\"{startPrefix}{a}{endPrefix}\", {a}.__str__())\n\t\telif type({a}) == str:\n\t\t\ttrad = trad.replace(\"{startPrefix}{a}{endPrefix}\", {a})\n\t\telse:\n\t\t\tprint(f\"`{startPrefix}type({a}){endPrefix}` is not a supported variable type\")\n\t\t\treturn None"
                     
                     if replaceFunc != "":
-                        condition = f"\n\t\tif trad != None:\n\t\t\ttrad = trad{replaceFunc}"
+                        condition += f"\n\t\tif trad != None:\n\t\t\ttrad = trad{replaceFunc}"
 
                     python_lang += f"\n\tdef {key}(self{parameters}):\n\t\t\"\"\"In {self.__default_app_lang} this message is translate to: ``{value}``\n\t\t\"\"\"\n\t\ttrad = self.__get_local_str(\"{key}\"){condition}\n\t\treturn trad"
 
