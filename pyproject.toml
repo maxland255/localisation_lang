@@ -4,13 +4,13 @@ build-backend = "hatchling.build"
 
 [project]
 name = "local_lang"
-version = "0.0.5"
+version = "0.0.6"
 authors = [
   { name="Maxlanf255", email="developer@pieteraerens.eu" },
 ]
 description = "A small package to localise your python application"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3.11",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",

@@ -1,6 +1,7 @@
 import json
 import os
 import re
+from typing import Any
 
 try:
     from local.localisation import Localisation
@@ -11,7 +12,8 @@ startPrefix = "{"
 endPrefix = "}"
 
 class LangInit:
-    __default_app_lang: str = None
+    __default_app_lang: str | None = None
+
     def __init__(self, default_app_lang: str = "en_us", reload_localisation: bool = True) -> None:
         file_path_exist = os.path.exists("./local/localisation.py")
         default_lang_path_exist = os.path.exists(f"./localisation/{default_app_lang}.json")
@@ -50,7 +52,7 @@ class LangInit:
                 new_local_json_file.close()
                         
         default_local_json_file = open(f"./localisation/{self.__default_app_lang}.json", "rb")
-        default_json_lang: dict[str, str] = json.loads(default_local_json_file.read())
+        default_json_lang: dict[str, str | Any] = json.loads(default_local_json_file.read())
         default_local_json_file.close()
 
         local_py_file = open("./local/localisation.py", "w")

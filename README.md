@@ -1,5 +1,11 @@
 # LocalLang
 
+**Installation**
+
+```
+pip install local-lang
+```
+
 **Example**
 
 
