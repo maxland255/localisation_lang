@@ -4,9 +4,9 @@ build-backend = "hatchling.build"
 
 [project]
 name = "local_lang"
-version = "0.0.6"
+version = "0.0.7"
 authors = [
-  { name="Maxlanf255", email="developer@pieteraerens.eu" },
+  { name="Maxland255", email="developer@pieteraerens.eu" },
 ]
 description = "A small package to localise your python application"
 readme = "README.md"

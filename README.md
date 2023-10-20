@@ -2,7 +2,7 @@
 
 **Installation**
 
-```
+```commandline
 pip install local-lang
 ```
 
@@ -10,7 +10,7 @@ pip install local-lang
 
 
 `test.py`
-```
+```python
 from locallang import LangInit
 import datetime
 
@@ -42,7 +42,7 @@ print(local.test(test="coucou"))
 ```
 
 `en_us.json`
-```
+```json
 {
     "hey": "Hey!",
     "hello_world": "Hello world!",
@@ -101,7 +101,7 @@ print(local.test(test="coucou"))
 ```
 
 `fr.json`
-```
+```json
 {
     "hey": "Coucou !",
     "hello_world": "Bonjour tout le monde!",
@@ -116,7 +116,7 @@ print(local.test(test="coucou"))
 ```
 
 `result in consol`
-```
+```text
 Hey!
 Hello world!
 Date: 2023/05/07 00:15
