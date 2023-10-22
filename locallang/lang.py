@@ -121,7 +121,7 @@ class LangInit:
         local_py_file.close()
 
     @staticmethod
-    def getLocalisation(lang: str) -> Localisation | None:
+    def getLocalisation(lang: str) -> Any | None:
         if os.path.exists("./local/localisation.py"):
             try:
                 return Localisation(lang=lang)
