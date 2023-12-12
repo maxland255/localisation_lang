@@ -115,13 +115,15 @@ class LangInit:
                     if replaceFunc != "":
                         condition += f"\n\t\tif trad != None:\n\t\t\ttrad = trad{replaceFunc}"
 
-                    python_lang += f"\n\t@property\n\tdef {key}(self{parameters}) -> str | None:\n\t\t\"\"\"In {self.__default_app_lang} this message is translate to: ``{value}``\n\t\t\"\"\"\n\t\ttrad = self.__get_local_str(\"{key}\"){condition}\n\t\treturn trad"
+                    property_definition = "\n\t@property" if parameters == "" else ""
+
+                    python_lang += f"{property_definition}\n\tdef {key}(self{parameters}) -> str | None:\n\t\t\"\"\"In {self.__default_app_lang} this message is translate to: ``{value}``\n\t\t\"\"\"\n\t\ttrad = self.__get_local_str(\"{key}\"){condition}\n\t\treturn trad"
 
         local_py_file.write(python_lang)
         local_py_file.close()
 
     @staticmethod
-    def getLocalisation(lang: str) -> Any | None:
+    def getLocalisation(lang: str) -> Localisation | None:
         if os.path.exists("./local/localisation.py"):
             try:
                 return Localisation(lang=lang)
