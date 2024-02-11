@@ -12,7 +12,7 @@ pip install local-lang
 `test.py`
 
 ```python
-from src.locallang import LangInit
+from locallang import LangInit
 import datetime
 
 localisation = LangInit()
