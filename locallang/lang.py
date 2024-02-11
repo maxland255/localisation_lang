@@ -70,9 +70,9 @@ class LangInit:
                     param: dict[str, dict[str, Any]] = default_json_lang.get(f"@{k}")
 
                     parameters = ""
-                    replaceFunc = ""
+                    replace_func = ""
                     condition = ""
-                    usedParam: list[str] = []
+                    used_param: list[str] = []
 
                     if param is not None:
                         placeholders: dict[str, dict[str, str]] = param.get("placeholders")
@@ -80,20 +80,20 @@ class LangInit:
                         pkeys = placeholders.keys()
 
                         for pk in pkeys:
-                            usedParam.append(pk)
+                            used_param.append(pk)
                             var_type = placeholders[pk].get("type")
                             if var_type is not None:
                                 if var_type == "int" or var_type == "float" or var_type == "str" or var_type == "bool":
                                     parameters += f", {pk}: {var_type}"
-                                    convertStr = ""
+                                    convert_str = ""
                                     if var_type == "int" or var_type == "float" or var_type == "bool":
-                                        convertStr = ".__str__()"
-                                    replaceFunc += f".replace(\"{startPrefix}{pk}{endPrefix}\", {pk}{convertStr})"
+                                        convert_str = ".__str__()"
+                                    replace_func += f".replace(\"{startPrefix}{pk}{endPrefix}\", {pk}{convert_str})"
                                 elif var_type == "datetime" or var_type == "time":
                                     date_time_format = placeholders[pk].get("format")
                                     if date_time_format is not None:
                                         parameters += f", {pk}: {var_type}"
-                                        replaceFunc += f".replace(\"{startPrefix}{pk}{endPrefix}\", {pk}.strftime('{date_time_format}'))"
+                                        replace_func += f".replace(\"{startPrefix}{pk}{endPrefix}\", {pk}.strftime('{date_time_format}'))"
                                     else:
                                         print(f"`format` key is required for `datetime` or `time` type")
                                         exit(0)
@@ -104,16 +104,16 @@ class LangInit:
                                 parameters += f", {pk}: str | int | float | bool | datetime | time"
                                 condition += f"\n\t\tif type({pk}) == int or type({pk}) == float or type({pk}) == datetime or type({pk}) == time or type({pk}) == bool:\n\t\t\ttrad = trad.replace(\"{startPrefix}{pk}{endPrefix}\", {pk}.__str__())\n\t\telif type({pk}) == str:\n\t\t\ttrad = trad.replace(\"{startPrefix}{pk}{endPrefix}\", {pk})\n\t\telse:\n\t\t\tprint(f\"`{startPrefix}type({pk}){endPrefix}` is not a supported variable type\")\n\t\t\treturn None"
 
-                    allKey: list[str] = re.findall("({[a-zA-Z]*})", value)
+                    all_key: list[str] = re.findall("({[a-zA-Z]*})", value)
 
-                    for a in allKey:
+                    for a in all_key:
                         a = a.replace("{", "").replace("}", "")
-                        if usedParam.__contains__(a) is False:
+                        if used_param.__contains__(a) is False:
                             parameters += f", {a}: str | int | float | bool | datetime | time"
                             condition += f"\n\t\tif type({a}) == int or type({a}) == float or type({a}) == datetime or type({a}) == time or type({a}) == bool:\n\t\t\ttrad = trad.replace(\"{startPrefix}{a}{endPrefix}\", {a}.__str__())\n\t\telif type({a}) == str:\n\t\t\ttrad = trad.replace(\"{startPrefix}{a}{endPrefix}\", {a})\n\t\telse:\n\t\t\tprint(f\"`{startPrefix}type({a}){endPrefix}` is not a supported variable type\")\n\t\t\treturn None"
 
-                    if replaceFunc != "":
-                        condition += f"\n\t\tif trad != None:\n\t\t\ttrad = trad{replaceFunc}"
+                    if replace_func != "":
+                        condition += f"\n\t\tif trad != None:\n\t\t\ttrad = trad{replace_func}"
 
                     property_definition = "\n\t@property" if parameters == "" else ""
 
@@ -123,11 +123,11 @@ class LangInit:
         local_py_file.close()
 
     @staticmethod
-    def getLocalisation(lang: str) -> Localisation | None:
+    def get_localisation(lang: str) -> Localisation | None:
         if os.path.exists("./local/localisation.py"):
             try:
                 return Localisation(lang=lang)
-            except:
+            except Exception:
                 return None
         else:
             return None
