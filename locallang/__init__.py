@@ -2,8 +2,8 @@ from locallang.lang import LangInit
 
 try:
     from locallang.lang import Localisation
-except:
+except ImportError:
     pass
 
-__version__ = "0.0.10"
+__version__ = "0.0.11"
 __all__ = ["LangInit", "Localisation"]

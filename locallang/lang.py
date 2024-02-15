@@ -13,8 +13,6 @@ endPrefix = "}"
 
 
 class LangInit:
-    __default_app_lang: str | None = None
-
     def __init__(self, default_app_lang: str = "en_us", reload_localisation: bool = True) -> None:
         file_path_exist = os.path.exists("./local/localisation.py")
         default_lang_path_exist = os.path.exists(f"./localisation/{default_app_lang}.json")
@@ -24,7 +22,7 @@ class LangInit:
             os.makedirs("./local", exist_ok=True)
             file = open("./local/localisation.py", "w")
             file.write(
-                "import json\nfrom datetime import datetime, time\nclass Localisation:\n\t__lang: str\n\tdef __init__(self, lang: str) -> None:\n\t\tself.__lang = lang\n\tdef __get_local_str(self, key: str) -> str | None:\n\t\ttry:\n\t\t\tlang_file = open(f\"./local/{self.__lang}.json\", \"rb\")\n\t\t\tlang_js: dict[str, str] = json.loads(lang_file.read())\n\t\t\tlang_file.close()\n\t\t\treturn lang_js.get(key)\n\t\texcept:\n\t\t\tprint(f\"\\n\\nLocalisation {self.__lang} is not supported\\n\\n\")\n\t\t\treturn None")
+                "import json\nfrom datetime import datetime, time\nclass Localisation:\n\tdef __init__(self, lang: str) -> None:\n\t\tself.__lang = lang\n\tdef __get_local_str(self, key: str) -> str | None:\n\t\ttry:\n\t\t\tlang_file = open(f\"./local/{self.__lang}.json\", \"rb\")\n\t\t\tlang_js: dict[str, str] = json.loads(lang_file.read())\n\t\t\tlang_file.close()\n\t\t\treturn lang_js.get(key)\n\t\texcept:\n\t\t\tprint(f\"\\n\\nLocalisation {self.__lang} is not supported\\n\\n\")\n\t\t\treturn None")
             file.close()
 
         if default_lang_path_exist is False:
@@ -59,7 +57,7 @@ class LangInit:
 
         local_py_file = open("./local/localisation.py", "w")
 
-        python_lang = "import json\nfrom datetime import datetime, time\nclass Localisation:\n\t__lang: str\n\tdef __init__(self, lang: str) -> None:\n\t\tself.__lang = lang\n\tdef __get_local_str(self, key: str) -> str | None:\n\t\ttry:\n\t\t\tlang_file = open(f\"./local/{self.__lang}.json\", \"rb\")\n\t\t\tlang_js: dict[str, str] = json.loads(lang_file.read())\n\t\t\tlang_file.close()\n\t\t\treturn lang_js.get(key)\n\t\texcept:\n\t\t\tprint(f\"\\n\\nLocalisation {self.__lang} is not supported\\n\\n\")\n\t\t\treturn None"
+        python_lang = "import json\nfrom datetime import datetime, time\nclass Localisation:\n\tdef __init__(self, lang: str) -> None:\n\t\tself.__lang = lang\n\tdef __get_local_str(self, key: str) -> str | None:\n\t\ttry:\n\t\t\tlang_file = open(f\"./local/{self.__lang}.json\", \"rb\")\n\t\t\tlang_js: dict[str, str] = json.loads(lang_file.read())\n\t\t\tlang_file.close()\n\t\t\treturn lang_js.get(key)\n\t\texcept:\n\t\t\tprint(f\"\\n\\nLocalisation {self.__lang} is not supported\\n\\n\")\n\t\t\treturn None"
 
         if len(default_json_lang.keys()) > 0:
             for k in default_json_lang.keys():
@@ -123,7 +121,7 @@ class LangInit:
         local_py_file.close()
 
     @staticmethod
-    def get_localisation(lang: str) -> Localisation | None:
+    def get_localisation(lang: str):
         if os.path.exists("./local/localisation.py"):
             try:
                 return Localisation(lang=lang)

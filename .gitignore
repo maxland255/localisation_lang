@@ -3,3 +3,6 @@
 /env
 .pypirc
 .idea
+
+tests/local/*
+tests/localisation/*
