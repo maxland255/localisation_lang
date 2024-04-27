@@ -12,12 +12,12 @@ pip install local-lang
 `test.py`
 
 ```python
-from locallang import LangInit
+from locallang import LangInit, getLocalisation
 import datetime
 
 localisation = LangInit()
 
-local = localisation.getLocalisation(lang="en_us")
+local = getLocalisation(local="en_us")
 
 print(local.hey())
 print(local.hello_world())
@@ -29,7 +29,7 @@ print(local.testFloat(floatNum=1.5))
 print(local.testBool(boolValue=True))
 print(local.test(test=1.5))
 
-local = localisation.getLocalisation(lang="fr")
+local = getLocalisation(local="fr")
 
 print(local.hey())
 print(local.hello_world())
