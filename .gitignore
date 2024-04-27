@@ -6,3 +6,4 @@
 
 tests/local/*
 tests/localisation/*
+tests/untranslated.json

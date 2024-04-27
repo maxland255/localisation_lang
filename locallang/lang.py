@@ -1,3 +1,10 @@
+#  Copyright (c) 2024 pieteraerens.eu
+#  All rights reserved.
+#  The file lang.py is a part of localisation.
+#  Created by harrypieteraerens
+#  Created: 4/27/24, 11:36 PM
+#  Last modified: 4/27/24, 11:36 PM
+
 import json
 import os
 import re

@@ -7,7 +7,7 @@ packages = ["locallang"]
 
 [project]
 name = "local_lang"
-version = "0.0.11"
+version = "0.0.12"
 authors = [
   { name="Maxland255", email="developer@pieteraerens.eu" },
 ]
