@@ -6,6 +6,38 @@
 pip install local-lang
 ```
 
+**Usage**
+
+```bash
+python -m locallang --help  # Show help
+python -m locallang --default-lang en_us  # Reload localisation
+python -m locallang --version  # Show version
+```
+
+**Json file structure**
+
+*`placeholders` is optional*
+
+*`no_f_string` is optional*
+- This parameter is used to disable the use of f-string in the localization if you use {} in your translation.
+
+*`format` is only for `datetime` and `time` type*
+
+```json
+{
+  "key": "value {placeholder_name}",
+  "@key": {
+    "no_f_string": "bool",
+    "placeholders": {
+      "placeholder_name": {
+        "type": "str|int|float|bool|datetime|time",
+        "format": "format"
+      }
+    }
+  }
+}
+```
+
 **Example**
 
 

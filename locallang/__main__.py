@@ -2,8 +2,8 @@
 #  All rights reserved.
 #  The file __main__.py is a part of localisation.
 #  Created by harrypieteraerens
-#  Created: 4/28/24, 1:35 AM
-#  Last modified: 4/28/24, 1:35 AM
+#  Created: 4/28/24, 2:18 AM
+#  Last modified: 4/28/24, 2:18 AM
 
 import argparse
 
@@ -18,8 +18,14 @@ def main():
     args = parser.parse_args()
 
     if args.default_local:
+        print("""
+Starting the localisation reload
+        """)
         lang_init = LangInit(default_language=args.default_local)
         lang_init.reload_localization()
+        print("""
+Localisation reloaded
+        """)
 
     else:
         print("Please provide the default localisation")

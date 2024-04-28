@@ -2,8 +2,8 @@
 #  All rights reserved.
 #  The file lang_init.py is a part of localisation.
 #  Created by harrypieteraerens
-#  Created: 4/28/24, 1:58 AM
-#  Last modified: 4/28/24, 1:58 AM
+#  Created: 4/28/24, 2:16 AM
+#  Last modified: 4/28/24, 2:16 AM
 
 import json
 
@@ -163,7 +163,14 @@ class Localisation{localization.stem.capitalize()}:
             # Define the return_translation
             return_translation = f"return f\"{value.replace('"', '\\"')}\""
 
+            # Check if no_f_string is found
+            no_f_string = parameters.get("no_f_string", False) if parameters is not None else False
+
+            if no_f_string:
+                return_translation = f"return \"{value.replace('"', '\\"')}\""
+
             if parameters is not None:
+                # Check if placeholders are found in the translation
                 placeholders = parameters.get("placeholders", None)
                 if placeholders is not None:
                     for placeholder, data in placeholders.items():
@@ -193,6 +200,10 @@ class Localisation{localization.stem.capitalize()}:
 
                             # Add the placeholder to the parameters_to_str
                             parameters_to_str += f"        {placeholder} = {placeholder}.strftime('{date_format}')\n"
+
+                            if no_f_string:
+                                # Add the placeholder to the return_translation
+                                return_translation += f".replace('{{{placeholder}}}', {placeholder})"
                             continue
 
                         # Add the placeholder to the parameters_str
@@ -209,10 +220,13 @@ class Localisation{localization.stem.capitalize()}:
                         # Add the placeholder to the parameters_str
                         parameters_str += f", {placeholder}: Any"
 
+                        if no_f_string:
+                            # Add the placeholder to the return_translation
+                            return_translation += f".replace('{{{placeholder}}}', {placeholder})"
+
             localization_function = f"""
     def {key.lower().replace(" ", "_")}(self{parameters_str}) -> str:
-{parameters_check}
-{parameters_to_str}
+{parameters_check}{parameters_to_str}
         {return_translation}
 """
             python += localization_function
@@ -319,8 +333,7 @@ class Localisation:
 
             localization_function = f"""
     def {key.lower().replace(" ", "_")}(self{parameters_str}) -> str | None:
-{parameters_check}
-{return_translation}
+{parameters_check}{return_translation}
 """
             python += localization_function
 
