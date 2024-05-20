@@ -19,7 +19,7 @@ class LangInit:
         :param default_language: Default language of the app
         :param reload_localization_on_launch: Reload the localization on launch program
         """
-        self.__default_language = default_language
+        self.__default_language = default_language.replace("-", "_")
         self.__reload_localization_on_launch = reload_localization_on_launch
 
         self.__not_translated: dict[str, list[str]] = {}
@@ -45,7 +45,7 @@ class LangInit:
         :return:
         """
         default_localization: Path = Path(self.__localisation_dir, f"{self.__default_language}.json")
-        default_localization_data: dict[str, dict[str, dict[str]] | str] = json.load(default_localization.open(mode="rb"))
+        default_localization_data: dict[str, dict[str, dict[str]] | str] = json.load(default_localization.open(mode="r"))
 
         translation_found: dict[str, list[str]] = {}
 
@@ -64,7 +64,7 @@ class LangInit:
                         self.__not_translated[local] = []
                     self.__not_translated[local].append(key)
 
-        with self.__untranslated_json.open(mode="w") as file:
+        with self.__untranslated_json.open(mode="w", encoding="utf-8") as file:
             file.write(json.dumps(self.__not_translated, indent=4))
 
         self.__write_master_localization_file(default_localization_data)
@@ -83,13 +83,13 @@ class LangInit:
 
             default_language_file = Path(self.__localisation_dir, f"{self.__default_language}.json")
             default_language_file.touch(exist_ok=True)
-            with default_language_file.open(mode="w") as file:
+            with default_language_file.open(mode="w", encoding="utf-8") as file:
                 file.write("{}")
 
         if not self.__untranslated_json.exists():
             self.__untranslated_json.touch(exist_ok=True)
 
-            with self.__untranslated_json.open(mode="w") as file:
+            with self.__untranslated_json.open(mode="w", encoding="utf-8") as file:
                 file.write("{}")
 
     def __get_all_lang_files(self) -> list[Path]:
@@ -140,7 +140,7 @@ class Localisation{localization.stem.capitalize()}:
 
         translation_found: list[str] = []
 
-        with localization.open(mode="rb") as file:
+        with localization.open(mode="r", encoding="utf-8") as file:
             translations = json.load(file)
 
         if translations is None:
@@ -231,7 +231,7 @@ class Localisation{localization.stem.capitalize()}:
 """
             python += localization_function
 
-        with Path(self.__local_dir, f"{localization.stem}.py").open(mode="w") as file:
+        with Path(self.__local_dir, f"{localization.stem}.py").open(mode="w", encoding="utf-8") as file:
             file.write(python)
 
         return translation_found
@@ -337,5 +337,5 @@ class Localisation:
 """
             python += localization_function
 
-        with Path(self.__local_dir, "localisation.py").open(mode="w") as file:
+        with Path(self.__local_dir, "localisation.py").open(mode="w", encoding="utf-8") as file:
             file.write(python)

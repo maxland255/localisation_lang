@@ -12,7 +12,7 @@ try:
 except ImportError:
     pass
 
-__version__ = "0.0.15"
+__version__ = "0.0.16"
 __all__ = ["LangInit", "Localisation", "getLocalisation"]
 
 
@@ -25,6 +25,6 @@ def getLocalisation(local: str):
     """
     try:
         from local.localisation import Localisation
-        return Localisation(local)
+        return Localisation(local.replace("-", "_"))
     except ImportError:
         return None

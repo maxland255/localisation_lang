@@ -3,6 +3,9 @@
 /env
 .pypirc
 .idea
+.pyc
+
+locallang/__pycache__/*
 
 tests/local/*
 tests/localisation/*
