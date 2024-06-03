@@ -7,7 +7,7 @@ packages = ["locallang"]
 
 [project]
 name = "local_lang"
-version = "0.0.16"
+version = "0.0.17"
 authors = [
   { name="Maxland255", email="developer@pieteraerens.eu" },
 ]
@@ -19,9 +19,14 @@ classifiers = [
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: OS Independent",
     "Topic :: Software Development :: Localization",
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
 ]
+license = { file = "LICENSE" }
+keywords = ["localisation", "localization", "lang", "language", "local_lang", "localisation_lang", "localization_lang", "locallang"]
 
 [project.urls]
 "Homepage" = "https://github.com/maxland255/localisation_lang"
 "Bug Tracker" = "https://github.com/maxland255/localisation_lang/issues"
+
+[project.scripts]
+locallang = "locallang.__main__:main"

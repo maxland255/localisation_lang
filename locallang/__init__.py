@@ -2,8 +2,8 @@
 #  All rights reserved.
 #  The file __init__.py is a part of localisation.
 #  Created by harrypieteraerens
-#  Created: 4/28/24, 2:14 AM
-#  Last modified: 4/28/24, 2:14 AM
+#  Created: 6/3/24, 11:38 AM
+#  Last modified: 6/3/24, 11:38 AM
 
 from locallang.lang_init import LangInit
 
@@ -12,7 +12,7 @@ try:
 except ImportError:
     pass
 
-__version__ = "0.0.16"
+__version__ = "0.0.17"
 __all__ = ["LangInit", "Localisation", "getLocalisation"]
 
 

@@ -6,12 +6,23 @@
 pip install local-lang
 ```
 
+**Description**
+
+LocalLang is a simple library to manage localization in your python program.
+It allows you to create a json file for each language you want to support.
+You can use placeholders in your translation and specify the type of the placeholder.
+You can also specify the format for the `datetime` and `time` type.
+
+This package converts your json file to a Python class with all your translation.
+You can then use this class to get your translation.
+
 **Usage**
 
 ```bash
-python -m locallang --help  # Show help
-python -m locallang --default-lang en_us  # Reload localisation
-python -m locallang --version  # Show version
+locallang --help  # Show help
+locallang --default-lang en  # Reload localisation
+locallang  # Reload localisation but the default language is en_us
+locallang --version  # Show version
 ```
 
 **Json file structure**
